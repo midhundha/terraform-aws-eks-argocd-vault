@@ -13,6 +13,10 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 3.1.1"
     }
+    vault = {
+      source  = "hashicorp/vault"
+      version = "~> 5.6.0"
+    }
   }
 
   cloud {
@@ -54,4 +58,10 @@ provider "helm" {
       args        = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
     }
   }
+}
+
+# Vault provider configuration
+provider "vault" {
+  address = "http://${var.vault_hostname}:8200"
+  token   = var.vault_token
 }

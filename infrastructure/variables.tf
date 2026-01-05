@@ -89,6 +89,19 @@ variable "vault_hostname" {
   default     = "vault.alljoy.casa"
 }
 
+variable "vault_address" {
+  description = "Address for HashiCorp Vault"
+  type        = string
+  default     = "https://vault.vault.svc.cluster.local:8200"
+}
+
+variable "vault_token" {
+  description = "Dev (root) token for HashiCorp Vault"
+  type        = string
+  default     = "devroot"
+  sensitive   = true
+}
+
 ####################################################################################
 ### DNS Variables
 ####################################################################################
