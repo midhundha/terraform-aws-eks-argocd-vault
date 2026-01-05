@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "CT-EKS-Cluster"
+  default     = "Demo-EKS-Cluster"
 }
 
 variable "cluster_version" {
@@ -56,7 +56,7 @@ variable "argocd_chart_version" {
 variable "argocd_hostname" {
   description = "Hostname for ArgoCD ingress"
   type        = string
-  default     = "argocd.chinmayto.com"
+  default     = "argocd.alljoy.casa"
 }
 
 
@@ -69,12 +69,33 @@ variable "argocd_admin_password" {
 }
 
 ####################################################################################
+### Vault Variables
+####################################################################################
+variable "vault_namespace" {
+  description = "Kubernetes namespace for HashiCorp Vault"
+  type        = string
+  default     = "vault"
+}
+
+variable "vault_chart_version" {
+  description = "HashiCorp Vault Helm chart version"
+  type        = string
+  default     = "0.31.0"
+}
+
+variable "vault_hostname" {
+  description = "Hostname for HashiCorp Vault ingress"
+  type        = string
+  default     = "vault.alljoy.casa"
+}
+
+####################################################################################
 ### DNS Variables
 ####################################################################################
 variable "domain_name" {
   description = "Domain name for the hosted zone"
   type        = string
-  default     = "chinmayto.com"
+  default     = "alljoy.casa"
 }
 
 variable "argocd_subdomain" {
@@ -87,4 +108,10 @@ variable "app_subdomain" {
   description = "Subdomain for Node.js application"
   type        = string
   default     = "app"
+}
+
+variable "vault_subdomain" {
+  description = "Subdomain for HashiCorp Vault"
+  type        = string
+  default     = "vault"
 }

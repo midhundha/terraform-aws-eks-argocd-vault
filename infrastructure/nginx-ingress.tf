@@ -1,7 +1,7 @@
 ################################################################################
 # Create ingress-nginx namespace
 ################################################################################
-resource "kubernetes_namespace" "ingress_nginx" {
+resource "kubernetes_namespace_v1" "ingress_nginx" {
   metadata {
     name = "ingress-nginx"
     labels = {
@@ -18,7 +18,7 @@ resource "helm_release" "nginx_ingress" {
   name       = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
-  namespace  = kubernetes_namespace.ingress_nginx.metadata[0].name
+  namespace  = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
   version    = "4.8.3"
 
   values = [
@@ -41,16 +41,16 @@ resource "helm_release" "nginx_ingress" {
     })
   ]
 
-  depends_on = [kubernetes_namespace.ingress_nginx]
+  depends_on = [kubernetes_namespace_v1.ingress_nginx]
 }
 
 ################################################################################
 # Get the NLB hostname from nginx ingress controller
 ################################################################################
-data "kubernetes_service" "nginx_ingress_controller" {
+data "kubernetes_service_v1" "nginx_ingress_controller" {
   metadata {
     name      = "ingress-nginx-controller"
-    namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
+    namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
   }
   depends_on = [helm_release.nginx_ingress]
 }

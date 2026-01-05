@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/chinmayto/terraform-aws-eks-argocd.git
-    targetRevision: HEAD
-    path: argocd
+    repoURL: https://github.com/midhundha/terraform-aws-eks-argocd-vault.git
+    targetRevision: main
+    path: argocd/applications
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

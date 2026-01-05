@@ -13,7 +13,7 @@ This directory contains ArgoCD application manifests for GitOps deployment.
 ### Option 1: Deploy Individual Application
 ```bash
 kubectl apply -f argocd/project.yaml
-kubectl apply -f argocd/nodejs-app-application.yaml
+kubectl apply -f argocd/nodejs-app/nodejs-app-application.yaml
 ```
 
 ### Option 2: Deploy using App of Apps Pattern (Recommended)
@@ -28,7 +28,7 @@ kubectl apply -f argocd/app-of-apps.yaml
 - **Source**: `k8s-manifests/` directory in this repository
 - **Destination**: `simple-nodejs-app` namespace
 - **Sync Policy**: Automated with self-healing enabled
-- **Access**: `http://app.chinmayto.com` (via NGINX Ingress)
+- **Access**: `http://app.alljoy.casa` (via NGINX Ingress)
 
 ## Features
 
@@ -40,7 +40,7 @@ kubectl apply -f argocd/app-of-apps.yaml
 
 ## Monitoring
 
-Access ArgoCD UI at: `https://argocd.chinmayto.com`
+Access ArgoCD UI at: `https://argocd.alljoy.casa`
 
 Default credentials:
 - Username: `admin`

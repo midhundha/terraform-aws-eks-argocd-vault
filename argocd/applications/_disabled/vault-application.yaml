@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hashi-vault-app
+  namespace: argocd
+spec:
+  project: hashi-apps
+  sources:
+    - repoURL: https://helm.releases.hashicorp.com/
+      chart: vault
+      targetRevision: 0.31.0
+      helm:
+        valueFiles:
+          - $gitvalues/apps/vault-app/k8s-manifests/values.yaml
+    - repoURL: https://github.com/midhundha/terraform-aws-eks-argocd-vault.git
+      targetRevision: main
+      ref: gitvalues
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hashi-vault-argoproj
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

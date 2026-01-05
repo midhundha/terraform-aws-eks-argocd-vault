@@ -1,0 +1,26 @@
+server:
+  # Enable dev mode
+  dev:
+    enabled: true
+    devRootToken: "devroot"
+
+  # Persistence for dev pod (required for scheduling)
+  dataStorage:
+    enabled: true          # creates PVC
+    storageClass: gp2      # must exist in your EKS cluster
+    size: 1Gi              # minimal size for dev mode
+    accessMode: ReadWriteOnce
+
+  # ingress:
+  #     enabled: true
+  #     annotations:
+  #       nginx.ingress.kubernetes.io/rewrite-target: /
+  #       nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  #       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+  #     ## Ingress class name (Optional; provide this instead of using annotations to specify the class)
+  #     ingressClassName: nginx
+  #     pathType: Prefix
+  #     hosts:
+  #       - host: vault.alljoy.casa
+  #         paths:
+  #         - /

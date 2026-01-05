@@ -44,7 +44,7 @@ output "public_subnets" {
 output "argocd_service_info" {
   description = "ArgoCD service information"
   value = {
-    namespace    = kubernetes_namespace.argocd.metadata[0].name
+    namespace    = kubernetes_namespace_v1.argocd.metadata[0].name
     service_name = "argocd-server"
     service_type = "ClusterIP"
   }
@@ -84,6 +84,21 @@ output "nodejs_app_dns_info" {
     subdomain       = var.app_subdomain
     full_hostname   = "${var.app_subdomain}.${var.domain_name}"
     app_url         = "http://${var.app_subdomain}.${var.domain_name}"
+    hosted_zone_id  = data.aws_route53_zone.main.zone_id
+    dns_record_type = "A (Alias to NGINX Ingress NLB)"
+  }
+}
+
+################################################################################
+# Vault App DNS Outputs
+################################################################################
+output "vault_app_dns_info" {
+  description = "HashiCorp Vault DNS configuration information"
+  value = {
+    domain_name     = var.domain_name
+    subdomain       = var.vault_subdomain
+    full_hostname   = "${var.vault_subdomain}.${var.domain_name}"
+    app_url         = "http://${var.vault_subdomain}.${var.domain_name}"
     hosted_zone_id  = data.aws_route53_zone.main.zone_id
     dns_record_type = "A (Alias to NGINX Ingress NLB)"
   }

@@ -4,11 +4,11 @@ metadata:
   name: nodejs-app
   namespace: argocd
 spec:
-  project: chinmayto-apps
+  project: hashi-apps
   source:
-    repoURL: https://github.com/chinmayto/terraform-aws-eks-argocd.git
-    targetRevision: HEAD
-    path: k8s-manifests
+    repoURL: https://github.com/midhundha/terraform-aws-eks-argocd-vault.git
+    targetRevision: main
+    path: apps/nodejs-app/k8s-manifests
   destination:
     server: https://kubernetes.default.svc
     namespace: simple-nodejs-app

@@ -5,12 +5,17 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
+# AWS ELB Hosted Zone ID (for Route53 Alias)
+data "aws_lb_hosted_zone_id" "nlb" {
+  load_balancer_type = "network"
+}
+
 ####################################################################################
 ### VPC Module Configuration
 ####################################################################################
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
+  version = "~> 6.5.1"
 
   name = "${var.cluster_name}-VPC"
   cidr = var.vpc_cidr
@@ -46,14 +51,14 @@ module "vpc" {
 ####################################################################################
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0"
+  version = "~> 21.10.0"
 
-  cluster_name    = var.cluster_name
-  cluster_version = var.cluster_version
+  name               = var.cluster_name
+  kubernetes_version = var.cluster_version
 
   vpc_id                                   = module.vpc.vpc_id
   subnet_ids                               = module.vpc.private_subnets
-  cluster_endpoint_public_access           = true
+  endpoint_public_access                   = true
   enable_cluster_creator_admin_permissions = true
 
   # EKS Managed Node Groups
@@ -66,12 +71,12 @@ module "eks" {
       instance_types = ["t3.medium"]
       capacity_type  = "ON_DEMAND"
 
-      subnet_ids = module.vpc.private_subnets
+      # subnet_ids = module.vpc.private_subnets
     }
   }
 
   # EKS Add-ons
-  cluster_addons = {
+  addons = {
     coredns = {
       most_recent = true
     }
@@ -79,10 +84,12 @@ module "eks" {
       most_recent = true
     }
     vpc-cni = {
-      most_recent = true
+      before_compute = true
+      most_recent    = true
     }
     eks-pod-identity-agent = {
-      most_recent = true
+      before_compute = true
+      most_recent    = true
     }
   }
 

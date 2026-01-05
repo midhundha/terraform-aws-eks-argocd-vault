@@ -1,12 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: chinmayto-apps
+  name: hashi-apps
   namespace: argocd
 spec:
-  description: Project for chinmayto applications
+  description: Project for demo applications
   sourceRepos:
-    - 'https://github.com/chinmayto/terraform-aws-eks-argocd.git'
+    - 'https://github.com/midhundha/terraform-aws-eks-argocd-vault.git'
+    - 'https://helm.releases.hashicorp.com/'
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc
